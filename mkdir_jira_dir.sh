@@ -5,12 +5,14 @@ WORK_PATH="/d/work/FA"
 
 
 #echo $SOURCE_PATH
-JIRA_PATH=`echo $SOURCE_PATH | sed -e "s:^.*Traces::"`
+JIRA_PATH=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/.*:\1:"`
+echo $JIRA_PATH
+JIRA_PATH=`echo $JIRA_PATH | sed -e "s:^.*Traces::"`
 
 #echo "/x/fwtest/Traces/L2/p6s/Integrity_CIV-X04/9JA0742A_07-18-19_18-23-51/errors/Error_000_ERR_COMMAND_TIMEOUT" | sed -e "s:^.*Traces::"
 
 jira_no=$1
-TARGET_PATH=$WORK_PATH"/"
+TARGET_PATH=$WORK_PATH
 TARGET_PATH+=$jira_no
 TARGET_PATH+=$JIRA_PATH
 
