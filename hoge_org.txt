@@ -38,3 +38,42 @@ Amazon Mastercardでのお買物で通常還元率に加えてさらに+1%ポイ
 
 アマゾンギフト券、アマゾンコイン、予約商品は対象外とのこと。
 
+
+$ find ./ -type f
+./capture_log_Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.txt
+./create_jira.url
+./ERR_MISCOMPARE_recreate.tcl
+./Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.d3z
+./Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.dsnap
+./Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.txt
+./Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.txt.bz2
+./Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1_Disk_M0.txt
+./jira_information.txt
+./LogDump_JPA06SGE_XJGNTp98_2019-07-26_21-27-05.bnz
+./miscompare_analysis_initiator(0).txt
+./miscompare_initiator(0)_drive_JPA06SGE.bin
+./miscompare_initiator(0)_reference_JPA06SGE.bin
+./miscompare_initiator(0)_trace_JPA06SGE.txt
+./Niagara_Log.bz2
+./Random_Test_0003_T_0x200_Initiator_0_0.txt
+./scso_dump_initiator_0.txt
+./trial_log.txt
+./WinAHCI_Miscompare_Trip_Trace_19-07-26_21-02-49.txt
+
+
+
+sys-JFKL-FWI-D922@JFKL-FWI-D922 MINGW64 /d/work/FA/CCB8-30716/XJ/p98/Integrity_FTC-BB19/JPA06SGE_07-26-19_18-36-33/errors/Error_001_ERR_MISCOMPARE
+$ wc -l Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.txt
+2372297 Integrity_ERR_MISCOMPARE_Random_Test_0003_T_0x200_Trial_1.txt
+
+sys-JFKL-FWI-D922@JFKL-FWI-D922 MINGW64 /d/work/FA/2019_06/CCB8-28453/Error_000_SSC_0x0294_0x00DD1482
+$ wc -l StressX_ssc_0x0294_0x00DD1482_basic_error_injection_A_0x200_Trial_21.txt
+
+14503185 StressX_ssc_0x0294_0x00DD1482_basic_error_injection_A_0x200_Trial_21.txt
+
+sys-JFKL-FWI-D922@JFKL-FWI-D922 MINGW64 /d/github_/practice_scripts (extract_tar)
+$ explorer "d:\fw"
+
+
+
+

@@ -36,3 +36,7 @@ fi
 
 cp -rp $SOURCE_PATH $TARGET_PATH
 
+
+# open TARGET_PATH folder
+start $TARGET_PATH
+
