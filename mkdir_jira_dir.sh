@@ -1,7 +1,34 @@
 #!/bin/sh
 
-#SOURCE_PATH="/x/fwtest/Traces/L2/p6s/Integrity_CIV-X04/9JA0742A_07-18-19_18-23-51/errors/Error_000_ERR_COMMAND_TIMEOUT"
+# Copyright (c) 2019 Akihiro Kamimura <Akihiro.Kamimura@wdc.com>
+# All rights reserved.
 
+set -ue
+
+usage_msg='usage:
+ - copy X_path data to the local
+ - extract compressed bz2 format files
+ - open local copied directory
+
+     -h             print help message
+     -v             print version'
+
+# check the option arguments
+#
+while getopts hv option
+do
+    case "$option" in
+    h)
+        echo "${usage_msg}"
+        exit 0
+        ;;
+    v)
+        echo "version 1"
+        exit 0
+        ;;
+    esac
+done
+shift $(($OPTIND - 1))
 
 WORK_PATH="/d/work/FA"
 
@@ -16,15 +43,17 @@ if [ $# -ne 2 ]; then
 fi
 
 #
-# Get original path to be used in the local foler
+# Get Folder name, like "Error_000_ERR_COMMAND_TIMEOUT"
 #
 
-#echo $SOURCE_PATH
+FOLDER_NAME=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/::1"`
+
+#
+# Get original path without Folder name
+#
+
 JIRA_PATH=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/.*:\1:"`
 JIRA_PATH=`echo $JIRA_PATH | sed -e "s:^.*Traces::"`
-#echo $JIRA_PATH
-
-#echo "/x/fwtest/Traces/L2/p6s/Integrity_CIV-X04/9JA0742A_07-18-19_18-23-51/errors/Error_000_ERR_COMMAND_TIMEOUT" | sed -e "s:^.*Traces::"
 
 TARGET_PATH=$WORK_PATH"/"
 TARGET_PATH+=$jira_no
@@ -34,7 +63,8 @@ TARGET_PATH+=$JIRA_PATH
 # Get original path to be used in the local foler
 #
 echo "Copying X_Drive data to ...."
-TEXT_TO_CONSOLE="Copied To:"
+TEXT_TO_CONSOLE="Copied To       : "
+
 #echo $jira_no
 echo $TEXT_TO_CONSOLE$TARGET_PATH
 
@@ -42,9 +72,24 @@ if [ ! -e $TARGET_PATH ]; then
     mkdir -p $TARGET_PATH
 fi
 
+#
+# copy X Drive's data to the Target Path
+#
+
 cp -rp $SOURCE_PATH $TARGET_PATH
 
+# move to $TARGET_PATH folder
+
+TARGET_PATH=$TARGET_PATH"/"$FOLDER_NAME
+pushd $TARGET_PATH
 
 # open TARGET_PATH folder
+
+echo "Open Local Dir: $TARGET_PATH"
 start $TARGET_PATH
+
+# extract "txt.bz2"
+find ./ -name "*.txt.bz2" | xargs -i bzip2 -d {}
+
+
 
