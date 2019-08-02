@@ -3,7 +3,29 @@
 # Copyright (c) 2019 Akihiro Kamimura <Akihiro.Kamimura@wdc.com>
 # All rights reserved.
 
-set -ue
+
+#
+# Editable Part
+#
+
+LOCAL_DIR_PATH="/d/work/FA"
+PREFIX_JIRA_NO="CCB8-"$1
+
+#
+# Bash Console Color Config
+#
+
+CR_RED=$'\e[1;31m'
+CR_GRN=$'\e[1;32m'
+CR_YEL=$'\e[1;33m'
+CR_BLU=$'\e[1;34m'
+CR_MAG=$'\e[1;35m'
+CR_CYN=$'\e[1;36m'
+CR_END=$'\e[0m'
+
+#
+# Program Start
+#
 
 usage_msg='usage:
  - copy X_path data to the local
@@ -30,9 +52,6 @@ do
 done
 shift $(($OPTIND - 1))
 
-WORK_PATH="/d/work/FA"
-
-jira_no="CCB8-"$1
 SOURCE_PATH=$2
 
 # check the number of arguments
@@ -55,8 +74,8 @@ FOLDER_NAME=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/::1"`
 JIRA_PATH=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/.*:\1:"`
 JIRA_PATH=`echo $JIRA_PATH | sed -e "s:^.*Traces::"`
 
-TARGET_PATH=$WORK_PATH"/"
-TARGET_PATH+=$jira_no
+TARGET_PATH=$LOCAL_DIR_PATH"/"
+TARGET_PATH+=$PREFIX_JIRA_NO
 TARGET_PATH+=$JIRA_PATH
 
 #
@@ -65,7 +84,6 @@ TARGET_PATH+=$JIRA_PATH
 echo "Copying X_Drive data to ...."
 TEXT_TO_CONSOLE="Copied To       : "
 
-#echo $jira_no
 echo $TEXT_TO_CONSOLE$TARGET_PATH
 
 if [ ! -e $TARGET_PATH ]; then
@@ -73,14 +91,38 @@ if [ ! -e $TARGET_PATH ]; then
 fi
 
 #
-# copy X Drive's data to the Target Path
+# Copy X Drive's data to the Target Path
 #
 
 cp -rp $SOURCE_PATH $TARGET_PATH
 
-# move to $TARGET_PATH folder
+
+# Set $TARGET_PATH folder
 
 TARGET_PATH=$TARGET_PATH"/"$FOLDER_NAME
+
+echo $TARGET_PATH
+
+#
+# Check if ETM, Memdump exist or not in $TARGET_PATH
+#
+#echo $TARGET_PATH"/*.d3z"
+ls $TARGET_PATH/*.d3z  1>/dev/null 2>/dev/null
+# option A for ls command can show the result without "current dir", .:w
+if [ $? -ne 0 ]; then
+    printf "%s\n" "${CR_YEL}<Warning> No memdump exist in $TARGET_PATH${CR_END} "
+    printf "%s\n" "Open original X_Path.."
+    printf "%s\n" "$SOURCE_PATH"
+    start $SOURCE_PATH
+    exit 1
+else
+    printf "%s\n" "${CR_GRN}At least one memdump file exist in  $TARGET_PATH.${CR_END}"
+fi
+
+#
+# if ETM, Memdump files seems to exist, the current directory
+# would move to $TARGET_PATH in local directory
+#
 pushd $TARGET_PATH
 
 # open TARGET_PATH folder
