@@ -66,13 +66,12 @@ fi
 #
 
 FOLDER_NAME=`echo $SOURCE_PATH | sed -e "s:^\(.*\)[\/|\\]::1"`
-echo "FOLDER_NAME is ...."
-echo $FOLDER_NAME
+TEXT_TO_CONSOLE="FOLDER_NAME is ...."
+echo $TEXT_TO_CONSOLE$FOLDER_NAME
 
 
 # convert "\" to "/"
 SOURCE_PATH=`echo $SOURCE_PATH | sed -e 's:\\\:\/:g'`
-echo $SOURCE_PATH
 
 # In case FOLDER_NAME became "XXXX.txt.bz2"
 # the SOURCE_PATH should be re-look again.
@@ -117,12 +116,9 @@ fi
 
 cp -rp $SOURCE_PATH $TARGET_PATH
 
-
-# Set $TARGET_PATH folder
+# ReSet $TARGET_PATH folder
 
 TARGET_PATH=$TARGET_PATH"/"$FOLDER_NAME
-echo "TARGET_PATH is ...."
-echo $TARGET_PATH
 
 #
 # Check if ETM, Memdump exist or not in $TARGET_PATH
