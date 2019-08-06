@@ -65,7 +65,14 @@ fi
 # Get Folder name, like "Error_000_ERR_COMMAND_TIMEOUT"
 #
 
-FOLDER_NAME=`echo $SOURCE_PATH | sed -e "s:^\(.*\)/::1"`
+FOLDER_NAME=`echo $SOURCE_PATH | sed -e "s:^\(.*\)[\/|\\]::1"`
+echo "FOLDER_NAME is ...."
+echo $FOLDER_NAME
+
+
+# convert "\" to "/"
+SOURCE_PATH=`echo $SOURCE_PATH | sed -e 's:\\\:\/:g'`
+echo $SOURCE_PATH
 
 # In case FOLDER_NAME became "XXXX.txt.bz2"
 # the SOURCE_PATH should be re-look again.
@@ -98,7 +105,7 @@ TARGET_PATH+=$JIRA_PATH
 echo "Copying X_Drive data to ...."
 TEXT_TO_CONSOLE="Copied To       : "
 
-echo $TEXT_TO_CONSOLE$TARGET_PATH
+echo $TEXT_TO_CONSOLE$TARGET_PATH"/"$FOLDER_NAME
 
 if [ ! -e $TARGET_PATH ]; then
     mkdir -p $TARGET_PATH
@@ -114,6 +121,7 @@ cp -rp $SOURCE_PATH $TARGET_PATH
 # Set $TARGET_PATH folder
 
 TARGET_PATH=$TARGET_PATH"/"$FOLDER_NAME
+echo "TARGET_PATH is ...."
 echo $TARGET_PATH
 
 #
