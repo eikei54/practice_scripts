@@ -142,7 +142,9 @@ fi
 #
 pushd $TARGET_PATH
 
+#
 # open TARGET_PATH folder
+#
 
 echo "Open Local Dir: $TARGET_PATH"
 start $TARGET_PATH
@@ -151,4 +153,19 @@ start $TARGET_PATH
 find ./ -name "*.txt.bz2" | xargs -i bzip2 -d {}
 
 
+#
+# split ETM file which size is over 800MB
+#
+
+SIZE_THRESHOLD=800000000
+PATH_SP_ETM=`which sp_etm.sh`
+
+for file in `ls $TARGET_PATH/*.txt`; do
+#    echo "${file}"
+    filesize=`wc -c < ${file}`
+    if [ $filesize -ge $SIZE_THRESHOLD ]; then
+        #echo "${file}"
+        source $PATH_SP_ETM ${file}
+    fi
+done
 
