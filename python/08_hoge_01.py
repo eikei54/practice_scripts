@@ -2,7 +2,7 @@ import random
 import math
 
 x=random.randint(0,100)
-print(x)
+print('random: randint,', x)
 
 print(math.pow(2,3))
 
